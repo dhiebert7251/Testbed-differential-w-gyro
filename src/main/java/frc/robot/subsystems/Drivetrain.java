@@ -130,4 +130,27 @@ public class Drivetrain extends SubsystemBase {
     builder.addDoubleProperty("leftDistance", frontLeftEncoder::getDistance, null);
     builder.addDoubleProperty("rightDistance", frontRightEncoder::getDistance, null);
   }
+
+    /** Zeroes the heading of the robot. */
+    public void zeroHeading() {
+      gyro.reset();
+    }
+
+      /**
+   * Returns the heading of the robot.
+   *
+   * @return the robot's heading in degrees, from 180 to 180
+   */
+  public double getHeading() {
+    return Math.IEEEremainder(gyro.getAngle(), 360) * (DrivetrainConstants.kGyroReversed ? -1.0 : 1.0);
+  }
+
+  /**
+   * Returns the turn rate of the robot.
+   *
+   * @return The turn rate of the robot, in degrees per second
+   */
+  public double getTurnRate() {
+    return gyro.getRate() * (DrivetrainConstants.kGyroReversed ? -1.0 : 1.0); //rate in degrees per second
+  }
 }

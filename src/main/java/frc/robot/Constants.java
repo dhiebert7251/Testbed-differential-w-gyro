@@ -41,6 +41,7 @@ public final class Constants {
     public static final int kBackRightEncoderB = 7
     ;
 
+    public static final boolean kGyroReversed = false;
 
   }
 
