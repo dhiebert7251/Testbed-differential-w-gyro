@@ -15,6 +15,7 @@ import frc.robot.commands.TurnToAngle;
 import frc.robot.commands.TurnToAngleProfiled;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -86,12 +87,12 @@ public class RobotContainer {
    */
   private void configureBindings() {
    // Drive at half speed when the right bumper is held
-   new JoystickButton(m_driverController, Button.kRightBumper)
-   .onTrue(new InstantCommand(() -> m_driveTrain.setMaxOutput(0.5)))
-   .onFalse(new InstantCommand(() -> m_driveTrain.setMaxOutput(1)));
+   m_driverController.rightBumper()
+     .onTrue(new InstantCommand(() -> m_driveTrain.setMaxOutput(0.5)))
+     .onFalse(new InstantCommand(() -> m_driveTrain.setMaxOutput(1)));
 
 // Stabilize robot to drive straight with gyro when left bumper is held
-new JoystickButton(m_driverController, Button.kLeftBumper)
+  m_driverController.leftBumper()
    .whileTrue(
        new PIDCommand(
            new PIDController(
@@ -108,20 +109,14 @@ new JoystickButton(m_driverController, Button.kLeftBumper)
            m_driveTrain));
 
 // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
-new JoystickButton(m_driverController, Button.kX)
+  m_driverController.x()
    .onTrue(new TurnToAngle(90, m_driveTrain).withTimeout(5));
 
 // Turn to -90 degrees with a profile when the Circle button is pressed, with a 5 second timeout
-new JoystickButton(m_driverController, Button.kY)
+  m_driverController.y()
    .onTrue(new TurnToAngleProfiled(-90, m_driveTrain).withTimeout(5));
 
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    //new Trigger(m_exampleSubsystem::exampleCondition)
-    //    .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
   /**
