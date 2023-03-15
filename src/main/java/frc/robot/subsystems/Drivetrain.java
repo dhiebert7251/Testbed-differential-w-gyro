@@ -7,7 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-//import com.kauailabs.navx.frc.AHRS;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.Encoder;
@@ -34,7 +34,7 @@ public class Drivetrain extends SubsystemBase {
   //private final Encoder backRightEncoder = new Encoder(DrivetrainConstants.kBackRightEncoderA, DrivetrainConstants.kBackRightEncoderB, false, EncodingType.k4X);   
 
 
-  //private final AHRS gyro;
+  private final AHRS gyro;
 
 
   public Drivetrain() {
@@ -61,7 +61,7 @@ public class Drivetrain extends SubsystemBase {
     backRightDrive.setInverted(DrivetrainConstants.kBackRightMotorInverted);
 
     backRightDrive.follow(frontRightDrive);
-/*
+
     //gyro
     gyro = new AHRS();
     
@@ -72,7 +72,7 @@ public class Drivetrain extends SubsystemBase {
       } catch (Exception e) {
       }
   }).start();
-  */
+  
 
     frontLeftEncoder.setDistancePerPulse(PhysicalConstants.kDistancePerPulse);
     frontRightEncoder.setDistancePerPulse(PhysicalConstants.kDistancePerPulse);
