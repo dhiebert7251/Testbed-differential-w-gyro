@@ -5,15 +5,23 @@
 package frc.robot;
 
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Auto_Complex;
 import frc.robot.commands.Auto_DriveForward;
 //import frc.robot.commands.Autos;
 import frc.robot.commands.DriveWithJoysticks;
+import frc.robot.commands.TurnToAngle;
+import frc.robot.commands.TurnToAngleProfiled;
 import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -47,10 +55,6 @@ public class RobotContainer {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 
-
-
-
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -81,6 +85,36 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+   // Drive at half speed when the right bumper is held
+   new JoystickButton(m_driverController, Button.kRightBumper)
+   .onTrue(new InstantCommand(() -> m_driveTrain.setMaxOutput(0.5)))
+   .onFalse(new InstantCommand(() -> m_driveTrain.setMaxOutput(1)));
+
+// Stabilize robot to drive straight with gyro when left bumper is held
+new JoystickButton(m_driverController, Button.kLeftBumper)
+   .whileTrue(
+       new PIDCommand(
+           new PIDController(
+               DrivetrainConstants.kP_Stabilization,
+               DrivetrainConstants.kI_Stabilization,
+               DrivetrainConstants.kD_Stabilization),
+           // Close the loop on the turn rate
+           m_driveTrain::getTurnRate,
+           // Setpoint is 0
+           0,
+           // Pipe the output to the turning controls
+           output -> m_driveTrain.arcadeDrive(-m_driverController.getLeftY(), output),
+           // Require the robot drive
+           m_driveTrain));
+
+// Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
+new JoystickButton(m_driverController, Button.kX)
+   .onTrue(new TurnToAngle(90, m_driveTrain).withTimeout(5));
+
+// Turn to -90 degrees with a profile when the Circle button is pressed, with a 5 second timeout
+new JoystickButton(m_driverController, Button.kY)
+   .onTrue(new TurnToAngleProfiled(-90, m_driveTrain).withTimeout(5));
+
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     //new Trigger(m_exampleSubsystem::exampleCondition)
     //    .onTrue(new ExampleCommand(m_exampleSubsystem));

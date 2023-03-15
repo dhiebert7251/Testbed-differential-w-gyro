@@ -68,7 +68,7 @@ public class Drivetrain extends SubsystemBase {
     new Thread(() -> {
       try {
           Thread.sleep(1000);
-          gyro.reset();
+          zeroHeading();
       } catch (Exception e) {
       }
   }).start();
@@ -103,14 +103,18 @@ public class Drivetrain extends SubsystemBase {
     frontRightEncoder.reset();
   }
 
-  /**
-   * Gets the average distance of the TWO encoders.
-   *
-   * @return the average of the TWO encoder readings
-   */
   public double getAverageEncoderDistance() {
     return (frontLeftEncoder.getDistance() + frontRightEncoder.getDistance()) / 2.0;
   }
+
+  public Encoder getLeftEncoder(){
+    return frontLeftEncoder;
+  }
+
+  public Encoder getRightEncoder(){
+    return frontRightEncoder;
+  }
+
 
     /**
    * Sets the max output of the drive. Useful for scaling the drive to drive more slowly.
@@ -145,11 +149,7 @@ public class Drivetrain extends SubsystemBase {
     return Math.IEEEremainder(gyro.getAngle(), 360) * (DrivetrainConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
-  /**
-   * Returns the turn rate of the robot.
-   *
-   * @return The turn rate of the robot, in degrees per second
-   */
+ 
   public double getTurnRate() {
     return gyro.getRate() * (DrivetrainConstants.kGyroReversed ? -1.0 : 1.0); //rate in degrees per second
   }

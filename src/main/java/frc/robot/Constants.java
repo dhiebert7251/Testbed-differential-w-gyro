@@ -43,14 +43,22 @@ public final class Constants {
 
     public static final boolean kGyroReversed = false;
 
+    //TODO:  adjust turn constants
     public static final double kP_Turn = 1.0;
     public static final double kI_Turn = 0.0;
     public static final double kD_Turn = 0.0;
 
+    public static final double kP_Stabilization = 1.0;
+    public static final double kI_Stabilization = 0.0;
+    public static final double kD_Stabilization = 0.0;
+
+
+
     public static final double kTurnToleranceDeg = 3.0;  //accuracy to setpoint before command ends
     public static final double kTurnRateToleranceDegPerS = 10.0; //degrees per second
+    public static final double kMaxTurnAccelerationDegPerSSquared = 300;
+    public static final double kMaxTurnRateDegPerS = 100;
 
-    
 
   }
 
