@@ -13,7 +13,7 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.PhysicalConstants;
@@ -82,7 +82,44 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    // Update telemetry 
+    SmartDashboard.putNumber("Left Encoder Raw", frontLeftEncoder.getRaw());
+    SmartDashboard.putNumber("Left Encoder Distance", frontLeftEncoder.getDistance());
+    SmartDashboard.putNumber("Left Encoder Rate", frontLeftEncoder.getRate());
+    SmartDashboard.putBoolean("Left Encoder Forward", frontLeftEncoder.getDirection()); //is this useful?
+
+    SmartDashboard.putNumber("Right Encoder Raw", frontRightEncoder.getRaw());
+    SmartDashboard.putNumber("Right Encoder Distance", frontRightEncoder.getDistance());
+    SmartDashboard.putNumber("Right Encoder Rate", frontRightEncoder.getRate());
+    SmartDashboard.putBoolean("Right Encoder Forward", frontRightEncoder.getDirection()); //is this useful?
+
+    SmartDashboard.putNumber("Average Distance", getAverageEncoderDistance());
+
+    SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
+    SmartDashboard.putNumber("Gyro Rotation Rate", gyro.getRate());
+    SmartDashboard.putNumber("Gyro Compass Heading", gyro.getCompassHeading());
+    SmartDashboard.putNumber("Gyro Altitude", gyro.getAltitude());
+    SmartDashboard.putNumber("Gyro Displacement X", gyro.getDisplacementX());
+    SmartDashboard.putNumber("Gyro Displacement Y", gyro.getDisplacementY());
+    SmartDashboard.putNumber("Gyro Displacement Z", gyro.getDisplacementZ());
+    SmartDashboard.putNumber("Gyro Pitch", gyro.getPitch());
+    SmartDashboard.putNumber("Gyro Roll", gyro.getRoll());
+    SmartDashboard.putNumber("Gyro Yaw", gyro.getYaw());
+    SmartDashboard.putNumber("Gyro Velocity X", gyro.getVelocityX());
+    SmartDashboard.putNumber("Gyro Velocity Y", gyro.getVelocityY());
+    SmartDashboard.putNumber("Gyro Velocity Z", gyro.getVelocityZ());
+
+    SmartDashboard.putNumber("Turn Rate", getTurnRate());
+    SmartDashboard.putNumber("Heading", getHeading());
+
+    SmartDashboard.putNumber("Front Left Motor Output Percentage", frontLeftDrive.getMotorOutputPercent());
+    SmartDashboard.putNumber("Front Left Motor Output Voltage", frontLeftDrive.getMotorOutputVoltage());
+    SmartDashboard.putNumber("Front Right Motor Output Percentage", frontRightDrive.getMotorOutputPercent());
+    SmartDashboard.putNumber("Front Right Motor Output Percentage", frontRightDrive.getMotorOutputPercent());
+
+
+
+
   }
 
 
