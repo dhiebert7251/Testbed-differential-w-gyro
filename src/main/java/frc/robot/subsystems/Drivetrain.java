@@ -29,9 +29,9 @@ public class Drivetrain extends SubsystemBase {
   private final DifferentialDrive differentialDrive = new DifferentialDrive(frontLeftDrive, frontRightDrive);
 
   private final Encoder frontLeftEncoder = new Encoder(DrivetrainConstants.kFrontLeftEncoderA, DrivetrainConstants.kFrontLeftEncoderB, false, EncodingType.k4X);
-  //private final Encoder backLeftEncoder = new Encoder(DrivetrainConstants.kBackLeftEncoderA, DrivetrainConstants.kBackLeftEncoderB, false, EncodingType.k4X);
+  private final Encoder backLeftEncoder = new Encoder(DrivetrainConstants.kBackLeftEncoderA, DrivetrainConstants.kBackLeftEncoderB, false, EncodingType.k4X);
   private final Encoder frontRightEncoder = new Encoder(DrivetrainConstants.kFrontRightEncoderA, DrivetrainConstants.kFrontRightEncoderB, false, EncodingType.k4X);
-  //private final Encoder backRightEncoder = new Encoder(DrivetrainConstants.kBackRightEncoderA, DrivetrainConstants.kBackRightEncoderB, false, EncodingType.k4X);   
+  private final Encoder backRightEncoder = new Encoder(DrivetrainConstants.kBackRightEncoderA, DrivetrainConstants.kBackRightEncoderB, false, EncodingType.k4X);   
 
 
   private final AHRS gyro;
@@ -92,6 +92,16 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Right Encoder Distance", frontRightEncoder.getDistance());
     SmartDashboard.putNumber("Right Encoder Rate", frontRightEncoder.getRate());
     SmartDashboard.putBoolean("Right Encoder Forward", frontRightEncoder.getDirection()); //is this useful?
+
+    SmartDashboard.putNumber("Back Left Encoder Raw", backLeftEncoder.getRaw());
+    SmartDashboard.putNumber("Back Left Encoder Distance", backLeftEncoder.getDistance());
+    SmartDashboard.putNumber("Back Left Encoder Rate", backLeftEncoder.getRate());
+    SmartDashboard.putBoolean("Back Left Encoder Forward", backLeftEncoder.getDirection()); //is this useful?
+
+    SmartDashboard.putNumber("Back Right Encoder Raw", backRightEncoder.getRaw());
+    SmartDashboard.putNumber("Back Right Encoder Distance", backRightEncoder.getDistance());
+    SmartDashboard.putNumber("Back Right Encoder Rate", backRightEncoder.getRate());
+    SmartDashboard.putBoolean("Back Right Encoder Forward", backRightEncoder.getDirection()); //is this useful?
 
     SmartDashboard.putNumber("Average Distance", getAverageEncoderDistance());
 
