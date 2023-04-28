@@ -18,6 +18,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
@@ -86,6 +87,11 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+  controller_telemetry();
+
+
+
+
    // Drive at half speed when the right bumper is held
    m_driverController.rightBumper()
      .onTrue(new InstantCommand(() -> m_driveTrain.setMaxOutput(0.5)))
@@ -108,11 +114,11 @@ public class RobotContainer {
            // Require the robot drive
            m_driveTrain));
 
-// Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
+  // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
   m_driverController.x()
    .onTrue(new TurnToAngle(90, m_driveTrain).withTimeout(5));
 
-// Turn to -90 degrees with a profile when the Circle button is pressed, with a 5 second timeout
+  // Turn to -90 degrees with a profile when the Circle button is pressed, with a 5 second timeout
   m_driverController.y()
    .onTrue(new TurnToAngleProfiled(-90, m_driveTrain).withTimeout(5));
 
@@ -127,5 +133,37 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return m_chooser.getSelected();
+  }
+
+  public void controller_telemetry(){
+//button telemetry
+SmartDashboard.putNumber("Left X", m_driverController.getLeftX());
+SmartDashboard.putNumber("Left Y", m_driverController.getLeftY());
+SmartDashboard.putNumber("Right X", m_driverController.getRightX());
+SmartDashboard.putNumber("Right Y", m_driverController.getRightY());
+
+SmartDashboard.putBoolean("Button 0", m_driverController.button(0).getAsBoolean());
+SmartDashboard.putBoolean("Button 1", m_driverController.button(1).getAsBoolean());
+SmartDashboard.putBoolean("Button 2", m_driverController.button(2).getAsBoolean());
+SmartDashboard.putBoolean("Button 3", m_driverController.button(3).getAsBoolean());
+SmartDashboard.putBoolean("Button 4", m_driverController.button(4).getAsBoolean());
+SmartDashboard.putBoolean("Button 5", m_driverController.button(5).getAsBoolean());
+SmartDashboard.putBoolean("Button 6", m_driverController.button(6).getAsBoolean());
+SmartDashboard.putBoolean("Button 7", m_driverController.button(7).getAsBoolean());
+SmartDashboard.putBoolean("Button 8", m_driverController.button(8).getAsBoolean());
+SmartDashboard.putBoolean("Button 9", m_driverController.button(9).getAsBoolean());
+SmartDashboard.putBoolean("Button 10", m_driverController.button(10).getAsBoolean());
+SmartDashboard.putBoolean("Button 11", m_driverController.button(11).getAsBoolean());
+SmartDashboard.putBoolean("Button 12", m_driverController.button(12).getAsBoolean());
+
+SmartDashboard.putBoolean("POV Center", m_driverController.povCenter().getAsBoolean());
+SmartDashboard.putBoolean("POV Up",m_driverController.povUp().getAsBoolean());
+SmartDashboard.putBoolean("POV Up Right",m_driverController.povUpRight().getAsBoolean());
+SmartDashboard.putBoolean("POV Right",m_driverController.povRight().getAsBoolean());
+SmartDashboard.putBoolean("POV Down Right",m_driverController.povDownRight().getAsBoolean());
+SmartDashboard.putBoolean("POV Down",m_driverController.povDown().getAsBoolean());
+SmartDashboard.putBoolean("POV Down Left",m_driverController.povDownLeft().getAsBoolean());
+SmartDashboard.putBoolean("POV Left",m_driverController.povLeft().getAsBoolean());
+SmartDashboard.putBoolean("POV Up Left",m_driverController.povUpLeft().getAsBoolean());
   }
 }
