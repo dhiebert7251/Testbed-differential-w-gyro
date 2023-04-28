@@ -14,7 +14,9 @@ import frc.robot.commands.DriveWithJoysticks;
 import frc.robot.commands.TurnToAngle;
 import frc.robot.commands.TurnToAngleProfiled;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Power;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -32,7 +34,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // Subsystems are defined here...
   private final Drivetrain m_driveTrain = new Drivetrain();
-  //private final PowerDistribution m_pdp = new PowerDistribution(0, ModuleType.kCTRE);
+  private final Power m_pdp = new Power();
 
   // Commands are defined here...
   // A simple auto routine that drives forward a specified distance, and then stops.
@@ -168,5 +170,9 @@ SmartDashboard.putBoolean("POV Down",m_driverController.povDown().getAsBoolean()
 SmartDashboard.putBoolean("POV Down Left",m_driverController.povDownLeft().getAsBoolean());
 SmartDashboard.putBoolean("POV Left",m_driverController.povLeft().getAsBoolean());
 SmartDashboard.putBoolean("POV Up Left",m_driverController.povUpLeft().getAsBoolean());
+
+SmartDashboard.putData("Drivetrain", m_driveTrain);
+SmartDashboard.putData("Power", m_pdp);
+
   }
 }
