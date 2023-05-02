@@ -16,7 +16,6 @@ import frc.robot.commands.TurnToAngleProfiled;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Power;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -66,12 +65,11 @@ public class RobotContainer {
     configureBindings();
 
     m_driveTrain.setDefaultCommand(
-        // A split-stick arcade command, with forward/backward controlled by the left
-        // hand, and turning controlled by the right.
+        // tank style drive
         new DriveWithJoysticks(
             m_driveTrain,
             () -> -m_driverController.getLeftY(),
-            () -> -m_driverController.getRightX()));
+            () -> -m_driverController.getRightY()));
 
 
     // Add commands to the autonomous command chooser

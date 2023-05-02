@@ -12,13 +12,13 @@ import frc.robot.subsystems.Drivetrain;
 
 public class DriveWithJoysticks extends CommandBase {
   private final Drivetrain m_drive;
-  private final DoubleSupplier m_forward;
-  private final DoubleSupplier m_rotation;
+  private final DoubleSupplier m_left;
+  private final DoubleSupplier m_right;
 
-  public DriveWithJoysticks(Drivetrain dt, DoubleSupplier forward, DoubleSupplier rotation) {
+  public DriveWithJoysticks(Drivetrain dt, DoubleSupplier leftSpeed, DoubleSupplier rightSpeed) {
     m_drive = dt;
-    m_forward = forward;
-    m_rotation = rotation;
+    m_left = leftSpeed;
+    m_right = rightSpeed;
     addRequirements(m_drive);
   }
 
@@ -29,9 +29,9 @@ public class DriveWithJoysticks extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.arcadeDrive(m_forward.getAsDouble(), m_rotation.getAsDouble());
-    SmartDashboard.putNumber("Forward", m_forward.getAsDouble());
-    SmartDashboard.putNumber("Rotation", m_rotation.getAsDouble());
+    m_drive.tankDrive(m_left.getAsDouble(), m_right.getAsDouble());
+    SmartDashboard.putNumber("Left Speed", m_left.getAsDouble());
+    SmartDashboard.putNumber("Right Speed", m_right.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

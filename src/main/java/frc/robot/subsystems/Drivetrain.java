@@ -100,6 +100,12 @@ public class Drivetrain extends SubsystemBase {
   public void arcadeDrive(double fwd, double rot) {
     differentialDrive.arcadeDrive(fwd, rot);
   }
+  
+
+  // Tank style drive
+  public void tankDrive(double leftSpeed, double rightSpeed) {
+    differentialDrive.tankDrive(leftSpeed, rightSpeed);
+  }
 
   /** Resets the drive encoders to currently read a position of 0. */
   public void resetEncoders() {
